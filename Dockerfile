@@ -2,7 +2,7 @@ FROM debian:latest
 
 ENV HOME /root
 
-RUN apt-get update && apt-get install -y make bzip2 wget git
+RUN apt-get update && apt-get install -y make bzip2 wget git libuv1-dev
 
 # Install sbcl
 RUN wget 'http://prdownloads.sourceforge.net/sbcl/sbcl-1.5.0-x86-64-linux-binary.tar.bz2' \
