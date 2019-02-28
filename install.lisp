@@ -1,8 +1,6 @@
 (load (merge-pathnames (user-homedir-pathname) "quicklisp.lisp"))
 
-(handler-case (quicklisp-quickstart:install)
-  (t (e)
-    (declare (ignore e))))
+(quicklisp-quickstart:install)
 
 (with-open-file (stream (merge-pathnames (merge-pathnames (user-homedir-pathname) ".sbclrc"))
                         :direction :output :if-exists :append

@@ -22,7 +22,6 @@ WORKDIR $HOME
 RUN wget https://beta.quicklisp.org/quicklisp.lisp && \
     sbcl --load install.lisp --non-interactive
 
-
 # Install depdencies
 RUN mkdir common-lisp
 WORKDIR $HOME/common-lisp
