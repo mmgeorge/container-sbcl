@@ -15,14 +15,13 @@ RUN wget 'http://prdownloads.sourceforge.net/sbcl/sbcl-1.5.0-x86-64-linux-binary
     cd /tmp \
     rm -rf /tmp/sbcl 
 
-COPY ./install.lisp $HOME
-WORKDIR $HOME
 
 # Install quicklisp
+COPY ./install.lisp $HOME
+WORKDIR $HOME
 RUN wget https://beta.quicklisp.org/quicklisp.lisp && \
     sbcl --load install.lisp --non-interactive
 
-RUN echo | sbcl --version && ls -la
 
 # Install depdencies
 RUN mkdir common-lisp
@@ -30,5 +29,3 @@ WORKDIR $HOME/common-lisp
 
 RUN git clone https://github.com/mmgeorge/asdf.git && \
     git clone https://github.com/mmgeorge/cl-expect.git   
-
-RUN echo | sbcl --version && ls -la
