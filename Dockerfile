@@ -2,7 +2,9 @@ FROM debian:latest
 
 ENV HOME /root
 
-RUN apt-get update && apt-get install -y make bzip2 wget git libuv1-dev
+COPY ./install.lisp $HOME
+
+RUN apt-get update && apt-get install -y make bzip2 wget git build-essential libuv1-dev
 
 # Install sbcl
 RUN wget 'http://prdownloads.sourceforge.net/sbcl/sbcl-1.5.0-x86-64-linux-binary.tar.bz2' \
@@ -16,15 +18,19 @@ RUN wget 'http://prdownloads.sourceforge.net/sbcl/sbcl-1.5.0-x86-64-linux-binary
     rm -rf /tmp/sbcl 
 
 
-# Install quicklisp
-COPY ./install.lisp $HOME
-WORKDIR $HOME
-RUN wget https://beta.quicklisp.org/quicklisp.lisp && \
-    sbcl --load install.lisp --non-interactive
-
-# Install depdencies
+# Install deps
 RUN mkdir common-lisp
 WORKDIR $HOME/common-lisp
 
 RUN git clone https://github.com/mmgeorge/asdf.git && \
-    git clone https://github.com/mmgeorge/cl-expect.git   
+    git clone https://github.com/mmgeorge/cl-expect.git && \
+    git clone https://github.com/mmgeorge/cl-libuv.git && \
+    git clone https://github.com/mmgeorge/cl-async && \
+    git clone https://github.com/mmgeorge/blackbird.git
+
+
+# Install quicklisp, warm deps
+WORKDIR $HOME
+RUN wget https://beta.quicklisp.org/quicklisp.lisp && \
+    sbcl --load install.lisp --non-interactive
+

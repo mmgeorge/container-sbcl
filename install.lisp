@@ -10,3 +10,7 @@
             (when (probe-file quicklisp-init)
               (load quicklisp-init)))
          :stream stream))
+
+(ql:quickload "cl-async")
+(ql:quickload "ironclad")
+
